@@ -25,9 +25,8 @@ def fetch_dogs(breed):
         return data
     else:
         print(f"Error: {response.status_code}")
-    
-
-if __name__ == "__main__": 
+        
+def main():
     breed_type = "retriever"
        
     try:
@@ -43,3 +42,7 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Error: {e}")
 
+        
+
+if __name__ == "__main__": 
+    main()
