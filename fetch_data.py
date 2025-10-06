@@ -1,6 +1,7 @@
 import requests
 import dotenv
 import os
+import json
 
 dotenv.load_dotenv()
 
@@ -17,20 +18,28 @@ def fetch_dogs(breed):
     response = requests.get(url, params=params, headers=headers)
     if response.status_code == 200:
         data = response.json()
+        
+        with open("data/result.json", "w") as file:
+            json.dump(data, file, indent=2)
+    
         return data
     else:
         print(f"Error: {response.status_code}")
     
 
-if __name__ == "__main__":
-    breed_type = input("Enter dog breed type (e.g., 'Terrier'): ")
-    
+if __name__ == "__main__": 
+    breed_type = "retriever"
+       
     try:
         dogs_data = fetch_dogs(breed_type)
         
         print(f"##List of {breed_type} dogs##")
-        for index in range(len(dogs_data)):
-            print(f"Name #{index+1}: {dogs_data[index]["name"]}")
+        if  len(dogs_data) == 0:
+            print("No dogs found.")
+        else:
+            for index in range(len(dogs_data)):
+                print(f"Name #{index+1}: {dogs_data[index]["name"]}")
+        
     except Exception as e:
         print(f"Error: {e}")
 
